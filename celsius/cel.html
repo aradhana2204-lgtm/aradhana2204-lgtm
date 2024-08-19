@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            text-align: center;
+            background-color: rgb(22, 22, 36);
+            color: white;
+        }
+        .converter {
+            display: inline-block;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #2c3e50;
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input, .input-group select, .input-group button {
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+        }
+        .input-group button {
+            background-color: #1abc9c;
+            color: white;
+            cursor: pointer;
+        }
+        .input-group button:hover {
+            background-color: #16a085;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="converter">
+        <h1>Temperature Converter</h1>
+        <div class="input-group">
+            <label for="temperature">Enter Temperature:</label>
+            <input type="number" id="temperature" placeholder="Enter temperature">
+        </div>
+        <div class="input-group">
+            <label for="unit">Select Unit:</label>
+            <select id="unit">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <button onclick="convertTemperature()">Convert</button>
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function convertTemperature() {
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const unit = document.getElementById('unit').value;
+            let convertedTemp;
+            let convertedUnit;
+
+            if (isNaN(temperature)) {
+                document.getElementById('result').innerText = "Please enter a valid number.";
+                return;
+            }
+
+            if (unit === "celsius") {
+                convertedTemp = (temperature * 9/5) + 32;
+                convertedUnit = "Fahrenheit";
+                convertedTempKelvin = temperature + 273.15;
+                convertedUnitKelvin = "Kelvin";
+            } else if (unit === "fahrenheit") {
+                convertedTemp = (temperature - 32) * 5/9;
+                convertedUnit = "Celsius";
+                convertedTempKelvin = (temperature - 32) * 5/9 + 273.15;
+                convertedUnitKelvin = "Kelvin";
+            } else if (unit === "kelvin") {
+                convertedTemp = temperature - 273.15;
+                convertedUnit = "Celsius";
+                convertedTempFahrenheit = (temperature - 273.15) * 9/5 + 32;
+                convertedUnitFahrenheit = "Fahrenheit";
+            }
+
+            if (unit === "celsius" || unit === "fahrenheit") {
+                document.getElementById('result').innerText = `${temperature} ${unit.charAt(0).toUpperCase() + unit.slice(1)} is equal to ${convertedTemp.toFixed(2)} ${convertedUnit} and ${convertedTempKelvin.toFixed(2)} ${convertedUnitKelvin}.`;
+            } else if (unit === "kelvin") {
+                document.getElementById('result').innerText = `${temperature} ${unit.charAt(0).toUpperCase() + unit.slice(1)} is equal to ${convertedTemp.toFixed(2)} ${convertedUnit} and ${convertedTempFahrenheit.toFixed(2)} ${convertedUnitFahrenheit}.`;
+            }
+        }
+    </script>
+</body>
+</html>
